@@ -6,6 +6,7 @@ interface ITask extends Document {
   status: "To Do" | "In Progress" | "Completed";
   dueDate: Date;
   user_id: mongoose.Schema.Types.ObjectId;
+  recurrence: "daily" | "weekly" | "monthly" | null;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -36,6 +37,11 @@ const TaskSchema: Schema<ITask> = new Schema(
     dueDate: {
       type: Date,
       required: true,
+    },
+    recurrence: {
+      type: String,
+      enum: ['daily', 'weekly', 'monthly'],
+      default: null,
     },
   },
   {

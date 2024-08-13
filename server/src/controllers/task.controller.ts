@@ -2,10 +2,10 @@ import Task from "../models/task.model";
 import { Request, Response } from "express";
 export const createTask = async (req: Request, res: Response) => {
   try {
-    const { title, description, status, dueDate } = req.body;
+    const { title, description, status, dueDate, recurrence } = req.body;
     //   @ts-ignore
     const user_id = req.user._id;
-    const task = new Task({ title, description, status, dueDate, user_id });
+    const task = new Task({ title, description, status, dueDate, user_id, recurrence });
     await task.save();
     return res
       .status(200)
@@ -31,8 +31,8 @@ export const readTask = async (req: Request, res: Response) => {
 export const updateTask = async (req: Request, res: Response) => {
   try {
     const taskId = req.params.id;
-    const { title, description, status, dueDate } = req.body;
-    const updatedTask = { title, description, status, dueDate };
+    const { title, description, status, dueDate, recurrence } = req.body;
+    const updatedTask = { title, description, status, dueDate, recurrence };
     const task = await Task.findByIdAndUpdate(taskId, updatedTask, {
       new: true,
     });

@@ -24,7 +24,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
-// 2. Create the Task Schema
 const TaskSchema = new mongoose_1.Schema({
     title: {
         type: String,
@@ -51,9 +50,13 @@ const TaskSchema = new mongoose_1.Schema({
         type: Date,
         required: true,
     },
+    recurrence: {
+        type: String,
+        enum: ['daily', 'weekly', 'monthly'],
+        default: null,
+    },
 }, {
-    timestamps: true, // Automatically adds createdAt and updatedAt fields
+    timestamps: true,
 });
-// 3. Create the Task Model
 const Task = (0, mongoose_1.model)("Task", TaskSchema);
 exports.default = Task;

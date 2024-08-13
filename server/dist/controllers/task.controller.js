@@ -7,10 +7,10 @@ exports.deleteTask = exports.updateTask = exports.readTask = exports.createTask 
 const task_model_1 = __importDefault(require("../models/task.model"));
 const createTask = async (req, res) => {
     try {
-        const { title, description, status, dueDate } = req.body;
+        const { title, description, status, dueDate, recurrence } = req.body;
         //   @ts-ignore
         const user_id = req.user._id;
-        const task = new task_model_1.default({ title, description, status, dueDate, user_id });
+        const task = new task_model_1.default({ title, description, status, dueDate, user_id, recurrence });
         await task.save();
         return res
             .status(200)
@@ -38,8 +38,8 @@ exports.readTask = readTask;
 const updateTask = async (req, res) => {
     try {
         const taskId = req.params.id;
-        const { title, description, status, dueDate } = req.body;
-        const updatedTask = { title, description, status, dueDate };
+        const { title, description, status, dueDate, recurrence } = req.body;
+        const updatedTask = { title, description, status, dueDate, recurrence };
         const task = await task_model_1.default.findByIdAndUpdate(taskId, updatedTask, {
             new: true,
         });
